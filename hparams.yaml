@@ -1,4 +1,15 @@
 default: &DEFAULT
+  datasets_dir: "Datasets"
+  storage_dir: "Storage"
+  train_data_dir: "FSDKaggle2018.audio_train"
+  test_data_dir: "FSDKaggle2018.audio_test"
+  metadata_dir: "FSDKaggle2018.meta"
+  train_meta_file: "train_post_competition.csv"
+  test_meta_file: "test_post_competition_scoring_clips.csv"
+  sample_rate: 32000
+  fft_window_size: 2048
+  mels_number: 64
+  hop_length: 1024
   epochs_number: 100
   batch_size: 64
 
