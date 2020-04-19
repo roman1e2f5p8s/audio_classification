@@ -182,7 +182,7 @@ def extract_features(data_type):
     return None
 
 
-f = extract_features('test')
+f = extract_features('train')
 
 '''
 # TODO: remove it later
