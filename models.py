@@ -57,7 +57,7 @@ class VGGish(nn.Module):
         n_out_channels = None
         for k in range(1, conv_blocks_number + 1):
             k_ = -4 if k == 1 else k
-            n_out_channels = 2**(6 + k -1)
+            n_out_channels = 2**(6 + k - 1)
             setattr(self, 'conv_block_{}'.format(k),
                     VGGishConvBlock(
                         in_channels_number=2**(6 + k_ - 2),
@@ -91,14 +91,13 @@ class VGGish(nn.Module):
         Returns:
             - out -- output
         '''
-        x = F.relu(self.batch_norm_1(self.conv_1(input_)))
-        x = F.relu(self.batch_norm_2(self.conv_2(x)))
-        out = F.max_pool2d(x, kernel_size=self.max_pool_kernel_size, stride=self.max_pool_stride)
+        (_, seq_len, mel_bins) = input_.shape
+        x = input_.view(-1, 1 , seq_len, mel_bins)
+
+        for k in range(1, self.conv_blocks_number + 1):
+            x = self.__getattr__('conv_block_{}'.format(k))(x)
+
+        x = F.max_pool2d(x, kernel_size=x.shape[2:])
+        x = x.view(x.shape[0:2])
+        out = F.log_softmax(self.fc_layer(x), dim=-1)
         return out
-
-
-VGG = VGGish(41, 4)
-print(VGG.fc_layer.weight)
-print(VGG.fc_layer.bias)
-# print(VGG.conv_block_1.conv_1.weight)
-# print(VGG.conv_block_1.conv_1.bias)

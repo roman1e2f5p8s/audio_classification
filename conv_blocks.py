@@ -59,7 +59,7 @@ class VGGishConvBlock(nn.Module):
 
         # apply the second 2D convolution layer over an input signal
         self.conv_2 = nn.Conv2d(
-                in_channels=in_channels_number,
+                in_channels=out_channels_number,
                 out_channels=out_channels_number,
                 kernel_size=kernel_size,
                 stride=stride,
