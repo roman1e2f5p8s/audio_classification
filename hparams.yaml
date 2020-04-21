@@ -8,6 +8,9 @@ default: &DEFAULT
   metadata_dir: "FSDKaggle2018.meta"
   train_meta_file: "train_post_competition.csv"
   test_meta_file: "test_post_competition_scoring_clips.csv"
+  labels_file: "labels.json"
+  validation_dir: "validation"
+  validation_meta_file: "validation.csv"
   #parameters for extracting log-mel features
   sample_rate: 32000
   fft_window_size: 2048
@@ -17,6 +20,8 @@ default: &DEFAULT
   classes_number: 41
   #data generation parameters
   batch_size: 128
+  validation_folds_number: 4
+  seed: 1234
   epochs_number: 100
 
 VGGish:

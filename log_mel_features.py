@@ -2,8 +2,9 @@ import os
 import time
 import h5py
 import numpy as np
-import pandas as pd
+from pandas import read_csv
 import librosa
+import logging  # TODO - add logging
 # TODO: remove it later
 import librosa.display
 import matplotlib.pyplot as plt
@@ -129,7 +130,7 @@ def extract_features(data_type):
         os.makedirs(HDF5_DIRNAME)
 
     # read metadata and create pandas dataframe
-    metadata_df = pd.DataFrame(pd.read_csv(META_FILE_PATH))
+    metadata_df = read_csv(META_FILE_PATH)  # TODO: put pd.DataFrame() on read_csv if required
     # print(metadata_df)
 
     # initialise object with parameters for features extraction
@@ -182,7 +183,7 @@ def extract_features(data_type):
     return None
 
 
-f = extract_features('train')
+# f = extract_features('train')
 
 '''
 # TODO: remove it later
