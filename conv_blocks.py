@@ -7,6 +7,7 @@ from init_layers import initialise_conv_layer
 
 class VGGishConvBlock(nn.Module):
     '''
+    Class for creating VGGish convolutional blocks
     See https://www.researchgate.net/publication/
     330925933_Simple_CNN_and_vggish_model_for_high-level_sound_categorization_
     within_the_Making_Sense_of_Sounds_challenge
