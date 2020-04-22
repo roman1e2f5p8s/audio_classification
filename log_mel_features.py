@@ -124,7 +124,8 @@ def extract_features(data_type):
         exit('Only \'train\' or \'test\' data types are allowed. Please use one of them. Exiting...')
 
     # we will store the feature in an h5 file
-    HDF5_PATH = os.path.join(params.storage_dir, 'features', 'log_mel', '{}.h5'.format(data_type))
+    HDF5_PATH = os.path.join(params.storage_dir, params.features_dir, 'log_mel',
+            '{}.h5'.format(data_type))
     HDF5_DIRNAME = os.path.dirname(HDF5_PATH)
     if not os.path.exists(HDF5_DIRNAME):
         os.makedirs(HDF5_DIRNAME)

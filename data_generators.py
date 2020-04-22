@@ -1,3 +1,4 @@
+from os.path import join 
 import h5py
 import numpy as np
 import logging
@@ -8,22 +9,23 @@ class DataGenerator:
     '''
     DataGenerator class
     '''
-    def __init__(self, hdf5_path, batch_size, classes_number, validation_meta_file_path=None,
-            time_steps=1, seed=1): 
+    def __init__(self, params, validate=False,
+            time_steps=1): 
         '''
         Initialisation
         Arguments:
-            - hdf5_path -- path to train.h5 file with features, str
-            - batch_size -- batch size: how many samples per batch to load, int
-            - classes_number -- number of classes in a multiclass classfication problem, int > 0
-            - validation_meta_file_path -- path to validation_meta_file, str. Defaults to None
+            - params -- parameters, hparams.HParamsFromYAML
+            - validate -- whether split the dataset into train and validation sets, bool.
+                Defaults to False
         '''
-        self.hdf5_path = hdf5_path
-        self.batch_size = batch_size
-        self.classes_number = classes_number
+        self.hdf5_path = join(params.storage_dir, params.features_dir, 'log_mel', 'train.h5')
+        # self.batch_size = params.batch_size
+        # self.classes_number = params.classes_number
+        self.validate = validate
+        # self.seed = params.seed
 
         # TODO
-        self.random_state = np.random.RandomState(seed)
+        self.random_state = np.random.RandomState(params.seed)
         self.validate_random_state = np.random.RandomState(0)
         self.time_steps = time_steps
         self.hop_frames = self.time_steps // 2
@@ -31,7 +33,7 @@ class DataGenerator:
         # load train.h5 file
         start_time = time()
         logging.info('Loading data from \"train.h5\"...')
-        hdf5 = h5py.File(hdf5_path, 'r')
+        hdf5 = h5py.File(self.hdf5_path, 'r')
 
         labels = hdf5['label'][:]
         filenames = hdf5['filename'][:]
@@ -49,13 +51,18 @@ class DataGenerator:
         logging.info('Loading completed successfully. '
                 'Elapsed time: {:.6f} s'.format(time() - start_time))
 
-        if validation_meta_file_path is not None:
+        if validate:
+            self.validation_meta_file_path = join(params.storage_dir, params.validation_dir,
+                params.validation_meta_file)
             self.train_audio_indexes, self.validate_audio_indexes = None, None
         else:
             self.train_audio_indexes = np.arange(len(filenames))
             self.validate_audio_indexes = np.empty(0)
         # print(self.train_audio_indexes)
         # print(self.validate_audio_indexes)
+
+        def _train_validation_indices(self):
+            pass
 
 
 

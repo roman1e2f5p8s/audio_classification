@@ -2,6 +2,8 @@ default: &DEFAULT
   #files and directories names
   datasets_dir: "Datasets"
   storage_dir: "Storage"
+  features_dir: "features"
+  models_dir: "models"
   logs_dir: "logs"
   train_data_dir: "FSDKaggle2018.audio_train"
   test_data_dir: "FSDKaggle2018.audio_test"
@@ -20,7 +22,8 @@ default: &DEFAULT
   classes_number: 41
   #data generation parameters
   batch_size: 128
-  validation_folds_number: 4
+  folds_number: 4
+  holdout_fold: 1
   seed: 1234
   epochs_number: 100
 
