@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from conv_blocks import VGGishConvBlock
-from init_layers import initialise_linear_layer
+from .conv_blocks import VGGishConvBlock
+from .init_layers import initialise_linear_layer
 
 
 class VGGish(nn.Module):
@@ -13,12 +13,12 @@ class VGGish(nn.Module):
     330925933_Simple_CNN_and_vggish_model_for_high-level_sound_categorization_
     within_the_Making_Sense_of_Sounds_challenge
     '''
-    def __init__(self, classes_number, conv_blocks_number=4, kernel_size=(3, 3), stride=(1, 1),
-            padding=(1, 1), add_bias_to_blocks=False, init_layers_manually=True, std_scale_factor=3.0,
-            max_pool_kernel_size=(2, 2), max_pool_stride=(2, 2), add_bias_to_fc=True):
+    def __init__(self, params):
         '''
         Initialisation
         Arguments:
+            - params -- model parameters, hparams.HParamsFromYAML
+        Attributes:
             - classes_number -- number of classes in a multiclass classfication problem, int > 0
             - conv_blocks_number -- number of the convolutional blocks, int > 0. Defaults to 4
             - kernel_size -- size of the convolving kernel, tuple like (a, b), where a, b are int > 0.
@@ -42,46 +42,47 @@ class VGGish(nn.Module):
         '''
         super(VGGish, self).__init__()
 
-        self.classes_number = classes_number
-        self.conv_blocks_number = conv_blocks_number
-        self.kernel_size = kernel_size
-        self.stride = stride
-        self.padding = padding
-        self.add_bias_to_blocks = add_bias_to_blocks
-        self.init_layers_manually = init_layers_manually
-        self.std_scale_factor = std_scale_factor
-        self.max_pool_kernel_size = max_pool_kernel_size
-        self.max_pool_stride = max_pool_stride
-        self.add_bias_to_fc = add_bias_to_fc
+        self.classes_number = params.classes_number
+        self.conv_blocks_number = params.conv_blocks_number
+        self.kernel_size = (params.kernel_size_1st_dim, params.kernel_size_2nd_dim)
+        self.stride = (params.stride_1st_dim, params.stride_2nd_dim)
+        self.padding = (params.padding_1st_dim, params.padding_2nd_dim)
+        self.add_bias_to_blocks = params.add_bias_to_blocks
+        self.init_layers_manually = params.init_layers_manually
+        self.std_scale_factor = params.std_scale_factor
+        self.max_pool_kernel_size = (params.max_pool_kernel_size_1st_dim,
+                params.max_pool_kernel_size_2nd_dim)
+        self.max_pool_stride = (params.max_pool_stride_1st_dim, params.max_pool_stride_2nd_dim)
+        self.add_bias_to_fc = params.add_bias_to_fc
 
         # add convolutional blocks
         n_out_channels = None
-        for k in range(1, conv_blocks_number + 1):
+        for k in range(1, self.conv_blocks_number + 1):
             k_ = -4 if k == 1 else k
             n_out_channels = 2**(6 + k - 1)
             setattr(self, 'conv_block_{}'.format(k),
                     VGGishConvBlock(
                         in_channels_number=2**(6 + k_ - 2),
                         out_channels_number=n_out_channels,
-                        kernel_size=kernel_size,
-                        stride=stride,
-                        padding=padding,
-                        add_bias=add_bias_to_blocks,
-                        init_layers_manually=init_layers_manually,
-                        std_scale_factor=3.0,
-                        max_pool_kernel_size=max_pool_kernel_size,
-                        max_pool_stride=max_pool_stride))
+                        kernel_size=self.kernel_size,
+                        stride=self.stride,
+                        padding=self.padding,
+                        add_bias=self.add_bias_to_blocks,
+                        init_layers_manually=self.init_layers_manually,
+                        std_scale_factor=self.std_scale_factor,
+                        max_pool_kernel_size=self.max_pool_kernel_size,
+                        max_pool_stride=self.max_pool_stride))
 
         # add the final fully connected layer
         self.fc_layer = nn.Linear(
                 in_features=n_out_channels,
-                out_features=classes_number,
-                bias=add_bias_to_fc)
+                out_features=self.classes_number,
+                bias=self.add_bias_to_fc)
 
         # initialise the fully connected layer at the end as described in
         # https://arxiv.org/pdf/1502.01852.pdf 
-        if init_layers_manually:
-            initialise_linear_layer(self.fc_layer, std_scale_factor=std_scale_factor)
+        if self.init_layers_manually:
+            initialise_linear_layer(self.fc_layer, std_scale_factor=self.std_scale_factor)
 
     def forward(self, input_):
         '''
@@ -92,8 +93,9 @@ class VGGish(nn.Module):
         Returns:
             - out -- output
         '''
-        (_, seq_len, mel_bins) = input_.shape
-        x = input_.view(-1, 1 , seq_len, mel_bins)
+        (batch_size, input_frames_number, mels_number) = input_.shape
+        # reshape input_ to 4D tensor of shape (batch_size, 1, input_frames_number, mels_number)
+        x = input_.view(-1, 1 , input_frames_number, mels_number)
 
         for k in range(1, self.conv_blocks_number + 1):
             x = self.__getattr__('conv_block_{}'.format(k))(x)

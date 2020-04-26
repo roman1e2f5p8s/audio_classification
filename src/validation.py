@@ -14,7 +14,8 @@ def generate_validation_metadata(params):
     '''
 
     logging.info('Generating validation metadata...')
-
+    
+    # shuffle indices using a random seed
     rand_generator = np.random.RandomState(seed=params.seed)
 
     META_FILE_PATH = os.path.join(params.datasets_dir, params.metadata_dir, params.train_meta_file)
@@ -32,6 +33,8 @@ def generate_validation_metadata(params):
     VALIDATION_META_FILE_DIR = os.path.join(params.storage_dir, params.validation_dir)
     if not os.path.exists(VALIDATION_META_FILE_DIR):
         os.makedirs(VALIDATION_META_FILE_DIR)
-    metadata_df.to_csv(os.path.join(VALIDATION_META_FILE_DIR, params.validation_meta_file))
+    VALIDATION_META_FILE_PATH = os.path.join(VALIDATION_META_FILE_DIR, params.validation_meta_file)
+    metadata_df.to_csv(VALIDATION_META_FILE_PATH)
 
-    logging.info('Generating completed successfully.')
+    logging.info('Generating completed successfully.\n|Validation metadata saved to {}'.\
+            format(VALIDATION_META_FILE_PATH))

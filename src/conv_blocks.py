@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from init_layers import initialise_conv_layer
+from .init_layers import initialise_conv_layer
 
 
 class VGGishConvBlock(nn.Module):

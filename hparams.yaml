@@ -13,22 +13,24 @@ default: &DEFAULT
   labels_file: "labels.json"
   validation_dir: "validation"
   validation_meta_file: "validation.csv"
+  #classes number
+  classes_number: 41
+
+log_mel:
+  <<: *DEFAULT
   #parameters for extracting log-mel features
+  features_type: "log_mel"
   sample_rate: 32000
   fft_window_size: 2048
   mels_number: 64
   hop_length: 1024
-  #classes number and label
-  classes_number: 41
-  #data generation parameters
-  batch_size: 128
-  folds_number: 4
-  holdout_fold: 1
-  seed: 1234
-  epochs_number: 100
+  min_frequency: 50.0
+  # use max_frequency as None
+  max_frequency:
 
 VGGish:
-  <<: *DEFAULT
+  #<<: *DEFAULT
+  model_name: "VGGish"
   #model parameters
   conv_blocks_number: 4
   kernel_size_1st_dim: 3
@@ -52,9 +54,16 @@ VGGish:
   eps: 1e-08
   weight_decay: 0.0
   amsgrad: False
-  #additionals
-  checkpoint_dir: "checkpoints/mlp"
-  learning_rate: 0.0001
+  learning_rate_decay: 0.9
+  learning_rate_decay_step: 100
+  #data generation parameters
+  batch_size: 128
+  folds_number: 4
+  holdout_fold: 1
+  seed: 1234
+  input_frames_number: 128
+  epochs_limit: 10
+  eval_audios_number: 1000
 
 CNN:
   <<: *DEFAULT

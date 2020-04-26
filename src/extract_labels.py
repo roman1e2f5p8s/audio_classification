@@ -24,4 +24,4 @@ def extract_labels(params):
     with open(LABELS_JSON_PATH, 'w') as f:
         dump({'labels': sorted(LABELS)}, f, indent=4)
 
-    logging.info('Extracting completed successfully.\n\tLabels saved in \"{}\"'.format(LABELS_JSON_PATH))
+    logging.info('Extracting completed successfully.\n|Labels saved in \"{}\"'.format(LABELS_JSON_PATH))
