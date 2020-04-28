@@ -16,6 +16,8 @@ def main():
     Returns:
         - None
     '''
+    START_TIME = time()
+
     # create parser of arguments
     args = Parser(parser_mode='main').args
 
@@ -64,7 +66,6 @@ def main():
     if args.verbose:
         print('|-------------------------------------------------------------------------------')
 
-    START_TIME = time()
     if args.mode == 'train':
         train(
                 params=params,
