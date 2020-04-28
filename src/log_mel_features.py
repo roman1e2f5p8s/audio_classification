@@ -102,9 +102,9 @@ def extract_features(data_type):
     start_time = time()
 
     # write out the features
-    for k, audio_fname in enumerate(metadata_df['fname']):
+    for k, filename in enumerate(metadata_df['fname']):
         print('Audio #{} of {}'.format(k+1, data_len), end='\r')
-        path_to_audio = os.path.join(AUDIO_FILES_PATH, audio_fname)
+        path_to_audio = os.path.join(AUDIO_FILES_PATH, filename)
         feature = log_mel.get_spectrogram(path_to_audio)
 
         begin_ind = h5_fout['feature'].shape[0]
@@ -124,10 +124,10 @@ def extract_features(data_type):
     h5_fout.create_dataset(name='filename', dtype='S32',
             data=[s.encode() for s in metadata_df['fname'].tolist()])
 
-    # write out labels and manually verifications if data_type is train
+    h5_fout.create_dataset(name='label', dtype='S32',
+            data=[s.encode() for s in metadata_df['label'].tolist()])
+    # write out manually verifications if data_type is train
     if data_type == 'train':
-        h5_fout.create_dataset(name='label', dtype='S32',
-                data=[s.encode() for s in metadata_df['label'].tolist()])
         h5_fout.create_dataset(name='manually_verified', dtype=np.int32,
                 data=metadata_df['manually_verified'].tolist())
     

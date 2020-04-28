@@ -29,7 +29,7 @@ class Logger:
         logging.basicConfig(
                 filename=self.log_path,
                 filemode='w',
-                format='%(asctime)s.%(msecs)03d --- %(filename)s [line:%(lineno)4d] %(levelname)s: '
+                format='|%(asctime)s.%(msecs)03d --- %(filename)s [line:%(lineno)4d] %(levelname)s: '
                     '%(message)s',
                 datefmt='%d-%b-%Y %H:%M:%S',
                 level=logging.DEBUG)
