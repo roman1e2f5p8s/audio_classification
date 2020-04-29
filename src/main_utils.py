@@ -131,7 +131,8 @@ def send_evaluation_data(model, generator, device):
             target = array_to_tensor(y_batch, device)
             model.eval()
             output = model(x)
-            data['losses'] += [cost(output, target).data.cpu().numpy()]
+            loss = np.mean(cost(output, target).data.cpu().numpy())
+            data['losses'] += [loss]
             data['output'] += [output.data.cpu().numpy()]
 
     return {key: np.array(val) for key, val in data.items()}
@@ -199,7 +200,7 @@ def evaluate(model, data_generator, mode, device, manually_verified_only, shuffl
     target = data['target']
     m_output = mean_output(output)
     predicted = np.argmax(m_output, axis=-1)
-    loss = float(np.mean(data['losses']))
+    loss = np.mean(data['losses']).item()
 
     average_accuracy = accuracy_score(target, predicted)
     F1_score = f1_score(target, predicted, average='weighted')

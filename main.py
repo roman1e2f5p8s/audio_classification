@@ -51,8 +51,13 @@ def main():
         # extract features if the corresponding h5 file does not exist yet
         if not os.path.isfile(os.path.join(params.storage_dir, params.features_dir, args.features,
                 '{}.h5'.format(args.mode))):
-            features_module = import_module('src.{}_features'.format(args.features))
-            features_module.extract_features(args.mode)
+            # features_module = import_module('src.{}_features'.format(args.features))
+            # features_module.extract_features(args.mode)
+            from src.features import extract_features
+            extract_features(
+                    data_type=args.mode,
+                    features_type=args.features
+                    )
 
     # for reproducibility
     reproducibility(seed=params.seed)
