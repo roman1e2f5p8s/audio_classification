@@ -131,7 +131,7 @@ def send_evaluation_data(model, generator, device):
             target = array_to_tensor(y_batch, device)
             model.eval()
             output = model(x)
-            data['losses'] += cost(output, target)
+            data['losses'] += [cost(output, target).data.cpu().numpy()]
             data['output'] += [output.data.cpu().numpy()]
 
     return {key: np.array(val) for key, val in data.items()}

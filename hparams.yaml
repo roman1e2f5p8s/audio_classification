@@ -28,6 +28,18 @@ log_mel:
   # use max_frequency as None
   max_frequency:
 
+mfcc:
+  <<: *DEFAULT
+  #parameters for extracting log-mel features
+  features_type: "mfcc"
+  sample_rate: 32000
+  fft_window_size: 2048
+  mfcc_number: 64
+  hop_length: 1024
+  min_frequency: 50.0
+  # use max_frequency as None
+  max_frequency:
+
 VGGish:
   #<<: *DEFAULT
   model_name: "VGGish"
