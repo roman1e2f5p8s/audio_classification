@@ -404,7 +404,7 @@ def validate(params, model, device, checkpoint_epoch, validated, manually_verifi
     CONF_MAT_PATH = os.path.join(BASE_PATH, subbase_path,
             'val_cm_at_epoch_{}.csv'.format(checkpoint_epoch))
     
-    saved_model = torch.load(SAVED_MODEL_PATH)
+    saved_model = torch.load(SAVED_MODEL_PATH, map_location=device)
     model.load_state_dict(saved_model['model_state_dict'])
     model.to(device)
 
@@ -483,7 +483,7 @@ def test(params, model, device, checkpoint_epoch, validated, manually_verified_o
     TEST_SUBM_PATH = os.path.join(BASE_PATH, subbase_path,
             'test_subm_at_epoch_{}.csv'.format(checkpoint_epoch))
 
-    saved_model = torch.load(SAVED_MODEL_PATH)
+    saved_model = torch.load(SAVED_MODEL_PATH, map_location=device)
     model.load_state_dict(saved_model['model_state_dict'])
     model.to(device)
 

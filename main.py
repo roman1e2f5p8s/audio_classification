@@ -30,7 +30,7 @@ def main():
 
     if args.verbose:
         print('|-------------------------------------------------------------------------------')
-    logger.info('===== Model: {}, features: {}. Mode: {} ====='.format(args.model, args.features,
+    logger.info('=== Model: {}, features: {}. Mode: {} ==='.format(args.model, args.features,
             args.mode))
     if args.verbose:
         print('|-------------------------------------------------------------------------------')
