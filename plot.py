@@ -27,6 +27,7 @@ def main():
                 params=params,
                 validated=args.validated,
                 manually_verified_only=args.manually_verified_only,
+                latex=args.latex,
                 verbose=args.verbose
                 )
     elif args.mode == 'validation':
@@ -37,6 +38,7 @@ def main():
                 checkpoint_epoch=args.epoch,
                 validated=args.validated,
                 manually_verified_only=args.manually_verified_only,
+                latex=args.latex,
                 verbose=args.verbose,
                 mode=args.mode
                 )
@@ -48,6 +50,7 @@ def main():
                 checkpoint_epoch=args.epoch,
                 validated=args.validated,
                 manually_verified_only=args.manually_verified_only,
+                latex=args.latex,
                 verbose=args.verbose,
                 mode=args.mode
                 )

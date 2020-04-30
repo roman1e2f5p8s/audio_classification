@@ -80,6 +80,14 @@ class Parser:
                     default=False,
                     required=False,
                     help='Use CUDA (if available) or not. Defaults to False')
+        else:
+            parser_train_opt.add_argument(
+                    '--latex',
+                    action='store_true',
+                    default=False,
+                    required=False,
+                    help='Use LaTeX for plotting or not. Defaults to False'
+                    )
         parser_train_opt.add_argument(
                 '--verbose',
                 action='store_true',
@@ -144,6 +152,14 @@ class Parser:
                     required=False,
                     help='Use CUDA (if available) or not. Defaults to False'
                     )
+        else:
+            parser_validation_opt.add_argument(
+                    '--latex',
+                    action='store_true',
+                    default=False,
+                    required=False,
+                    help='Use LaTeX for plotting or not. Defaults to False'
+                    )
         parser_validation_opt.add_argument(
                 '--verbose',
                 action='store_true',
@@ -200,6 +216,14 @@ class Parser:
                     default=False,
                     required=False,
                     help='Use CUDA (if available) or not. Defaults to False'
+                    )
+        else:
+            parser_test_opt.add_argument(
+                    '--latex',
+                    action='store_true',
+                    default=False,
+                    required=False,
+                    help='Use LaTeX for plotting or not. Defaults to False'
                     )
         parser_test_opt.add_argument(
                 '--verbose',

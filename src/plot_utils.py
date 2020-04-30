@@ -84,7 +84,7 @@ def plot_confusion_matrix(cm, ticks, labels, model_dir, model_name, features_typ
                 cm_path))
 
 
-def plot_train(params, validated, manually_verified_only, verbose):
+def plot_train(params, validated, manually_verified_only, latex, verbose):
     '''
     Function for plotting results of training: accuracies and losses
     Arguments:
@@ -92,11 +92,13 @@ def plot_train(params, validated, manually_verified_only, verbose):
         - validated -- where the model was trained on full train dataset or not, bool
         - manually_verified_only -- test model if it was trained using only manually verified audios
             for evaluation, bool
+        - latex -- use latex for plot or not, bool
         - verbose -- if True, print the output to console, bool
     Returns:
         - None
     '''
-    set_plot_rc()
+    if latex:
+        set_plot_rc()
     BASE_PATH = join(params.storage_dir, 'models', params.model_name, params.features_type)
     subbase_path = join('train_validation', 'holdout_fold={}'.format(params.holdout_fold)) \
             if validated else 'train_only'
@@ -158,7 +160,7 @@ def plot_train(params, validated, manually_verified_only, verbose):
         print('|Figure saved to\n|{}'.format(file_path))
 
 
-def plot_validation_test(params, checkpoint_epoch, validated, manually_verified_only, verbose,
+def plot_validation_test(params, checkpoint_epoch, validated, manually_verified_only, latex, verbose,
         mode):
     '''
     Function for plotting results of validation: accuracies and confusion matrix
@@ -168,12 +170,14 @@ def plot_validation_test(params, checkpoint_epoch, validated, manually_verified_
         - validated -- where the model was trained on full train dataset or not, bool
         - manually_verified_only -- test model if it was trained using only manually verified audios
             for evaluation, bool
+        - latex -- use latex for plot or not, bool
         - verbose -- if True, print the output to console, bool
         - mode -- either 'validation' or 'test', str
     Returns:
         - None
     '''
-    set_plot_rc()
+    if latex:
+        set_plot_rc()
 
     (prefix, title_begin) = ('val', 'Validation') if mode == 'validation' else ('test', 'Test')
 
