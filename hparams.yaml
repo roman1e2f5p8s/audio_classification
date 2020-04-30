@@ -53,18 +53,17 @@ chroma:
   max_frequency:
 
 VGGish:
-  #<<: *DEFAULT
   model_name: "VGGish"
   #model parameters
-  conv_blocks_number: 5
-  kernel_size_1st_dim: 4 #was 3
-  kernel_size_2nd_dim: 4 #was 3
+  conv_blocks_number: 4
+  kernel_size_1st_dim: 3 #was 3
+  kernel_size_2nd_dim: 3 #was 3
   stride_1st_dim: 1
   stride_2nd_dim: 1
   padding_1st_dim: 1
   padding_2nd_dim: 1
   add_bias_to_blocks: False
-  init_layers_manually: False  #was True
+  init_layers_manually: True
   std_scale_factor: 3.0
   max_pool_kernel_size_1st_dim: 2
   max_pool_kernel_size_2nd_dim: 2
@@ -86,5 +85,5 @@ VGGish:
   holdout_fold: 1
   seed: 2020
   input_frames_number: 128
-  epochs_limit: 15  # was 10
-  eval_audios_number: 1500  # was 1000
+  epochs_limit: 10  # was 10
+  eval_audios_number: 1000  # was 1000

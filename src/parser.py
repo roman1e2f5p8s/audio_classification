@@ -30,7 +30,7 @@ class Parser:
                 )
         
         # parser for training
-        parser_train = subparsers.add_parser('train', help='b')
+        parser_train = subparsers.add_parser('train')
         # required arguments in the train mode
         parser_train_req = parser_train.add_argument_group('required arguments')
         parser_train_req.add_argument(

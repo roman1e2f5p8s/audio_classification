@@ -109,18 +109,22 @@ def plot_train(params, validated, manually_verified_only, verbose):
     data_df = pd.DataFrame()
     data_df['epoch'] = raw_df['train']['epoch']
     
-    for name, data in raw_df['train'][1:].iteritems():
-        data_df['{}_t'.format(name)] = data
+    for name, data in raw_df['train'].iteritems():
+        if not name == 'epoch':
+            data_df['{}_t'.format(name)] = data
     
-    for name, data in raw_df['validation'][1:].iteritems():
-        data_df['{}_v'.format(name)] = data
+    if validated:
+        for name, data in raw_df['validation'].iteritems():
+            if not name == 'epoch':
+                data_df['{}_v'.format(name)] = data
         
     fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, ncols=1, figsize=(8, 9))
     
     ax1.set_title('Loss over training for {} model using {} features'.\
             format(params.model_name, params.features_type.replace('_', '-')), fontsize=18)
     ax1.plot(data_df['epoch'], data_df['loss_t'], '-o', color='blue', label='Training loss')
-    ax1.plot(data_df['epoch'], data_df['loss_v'], '-d', color='orange', label='Validation loss')
+    if validated:
+        ax1.plot(data_df['epoch'], data_df['loss_v'], '-d', color='orange', label='Validation loss')
     ax1.set_xticks(data_df['epoch'])
     ax1.set_xlabel('epoch', fontsize=16)
     ax1.set_ylabel('loss', fontsize=16)
@@ -129,7 +133,8 @@ def plot_train(params, validated, manually_verified_only, verbose):
     ax2.set_title('Accuracy over training for {} model using {} features'.\
             format(params.model_name, params.features_type.replace('_', '-')), fontsize=18)
     ax2.plot(data_df['epoch'], data_df['accuracy_t'], '-o', color='green', label='Training accuracy')
-    ax2.plot(data_df['epoch'], data_df['accuracy_v'], '-d', color='red', label='Validation accuracy')
+    if validated:
+        ax2.plot(data_df['epoch'], data_df['accuracy_v'], '-d', color='red', label='Validation accuracy')
     ax2.set_xticks(data_df['epoch'])
     ax2.set_xlabel('epoch', fontsize=16)
     ax2.set_ylabel('accuracy', fontsize=16)
@@ -138,7 +143,9 @@ def plot_train(params, validated, manually_verified_only, verbose):
     ax3.set_title('Weighted F1-score over training for {} model using {} features'.\
             format(params.model_name, params.features_type.replace('_', '-')), fontsize=18)
     ax3.plot(data_df['epoch'], data_df['f1_score_t'], '-o', color='black', label='Training F1-score')
-    ax3.plot(data_df['epoch'], data_df['f1_score_v'], '-d', color='magenta', label='Validation F1-score')
+    if validated:
+        ax3.plot(data_df['epoch'], data_df['f1_score_v'], '-d', color='magenta',
+                label='Validation F1-score')
     ax3.set_xticks(data_df['epoch'])
     ax3.set_xlabel('epoch', fontsize=16)
     ax3.set_ylabel('F1-score', fontsize=16)
