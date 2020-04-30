@@ -78,14 +78,16 @@ class DataGenerator:
         train_begin_end_indices = self.begin_end_indices[self.train_audio_indices]
         x_train = [self.x[begin:end] for [begin, end] in train_begin_end_indices]
 
-        # join along axis 0 such that the resulting array will have shape (*, mels_number)
+        # join along axis 0 such that the resulting array will have shape (*, [f]_number),
+        # where f mean log_mel, or mfcc, or chroma
         x_train = np.concatenate(x_train, axis=0)
-        if x_train.ndim == 3:  # TODO - remove it
-            exit('ndim of x_train = 3 but not 2!! change axis to (0, 1) instead of 0 in mean/std')
+        # print(x_train.shape)
+        # exit()
 
-        # compute mean and std for training data, the resulting arrays will have shape (mels_number,)
-        self.mean = np.mean(x_train, axis=0)
-        self.std = np.std(x_train, axis=0)
+        # compute mean and std for training data, the resulting arrays will have shape ([f]_number,)
+        axis = 0 if x_train.ndim == 2 else (0, 1)
+        self.mean = np.mean(x_train, axis=axis)
+        self.std = np.std(x_train, axis=axis)
 
         # generate training chunks
         self.train_chunks = []

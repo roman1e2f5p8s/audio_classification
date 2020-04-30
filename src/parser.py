@@ -43,7 +43,7 @@ class Parser:
         parser_train_req.add_argument(
                 '--features',
                 type=str,
-                choices=['log_mel', 'mfcc', 'chroma', 'raw'],
+                choices=['log_mel', 'mfcc', 'chroma'],
                 required=True,
                 help='One of available methods to extract features{}'.format(_plot)
                 )
@@ -110,7 +110,7 @@ class Parser:
         parser_validation_req.add_argument(
                 '--features',
                 type=str,
-                choices=['log_mel', 'mfcc', 'chroma', 'raw'],
+                choices=['log_mel', 'mfcc', 'chroma'],
                 required=True,
                 help='One of available methods to extract features{}'.format(_plot)
                 )
@@ -182,7 +182,7 @@ class Parser:
         parser_test_req.add_argument(
                 '--features',
                 type=str,
-                choices=['log_mel', 'mfcc', 'chroma', 'raw'],
+                choices=['log_mel', 'mfcc', 'chroma'],
                 required=True,
                 help='One of available methods to extract features{}'.format(_plot)
                 )

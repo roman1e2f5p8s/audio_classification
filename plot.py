@@ -32,7 +32,7 @@ def main():
                 )
     elif args.mode == 'validation':
         if args.verbose:
-            print('|Plotting results of training...')
+            print('|Plotting results of validation...')
         plot_validation_test(
                 params=params,
                 checkpoint_epoch=args.epoch,
