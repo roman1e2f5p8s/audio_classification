@@ -18,7 +18,7 @@ package for music and audio analysis is used to extract the features. We also ma
 classifiers.
 
 Datasets must be used from [Zenodo](https://zenodo.org/record/2552860#.XqxEMjMo-uV) and placed into
-folders as described in ```hparams.yaml```. Namely, ```Datasets``` must include directory ```FSDKaggle2018.audio_train``` with training audios, ```FSDKaggle2018.audio_test``` with test audios,
+folders as described in ```hparams.yaml```. Namely, folder ```Datasets``` must include directory ```FSDKaggle2018.audio_train``` with training audios, ```FSDKaggle2018.audio_test``` with test audios,
 ```FSDKaggle2018.meta``` with csv meta-files ```train_post_competition.csv``` and ```test_post_competition_scoring_clips.csv```. We highly reccoment to keep this structure.
 
 ### Installing
