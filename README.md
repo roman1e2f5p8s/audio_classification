@@ -17,6 +17,8 @@ package for music and audio analysis is used to extract log-mel and mfcc feature
 [scikit-learn](https://scikit-learn.org/stable/) package to compute evaluation measures of proposed 
 classifiers.
 
+Datasets must be used from [Zenodo](https://zenodo.org/record/2552860#.XqxEMjMo-uV).
+
 ### Installing
 
 To install all required modules of the appropriate version, please run the following command:
