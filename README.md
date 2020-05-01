@@ -53,6 +53,8 @@ python plot.py validation --model={VGGish,CNN} --features={log_mel,mfcc,chroma} 
 python plot.py test --model={VGGish,CNN} --features={log_mel,mfcc,chroma} --epoch=EPOCH --validated --manually_verified_only --latex --verbose
 ```
 
+Use ```python {main,plot}.py {train,validation,test} -h[--help]``` for detail.
+ 
 ## Built With
 
 * [PyTorch](https://pytorch.org/)
