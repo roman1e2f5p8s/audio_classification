@@ -1,7 +1,7 @@
-# COMP47650 Deep Learning Project: Audio Tagging Task
+# Deep Learning Project: Audio Tagging Task
 
 This project is about tagging audio clips that are classified with one of 41 classes. The project 
-implements a few classifiers. We present audio classifiers based on CNNs and VGGish architecture.
+implements a few classifiers. We present audio classifiers based on CNNs and VGGish architectures.
 Each network can take log-mel, mfcc, or chroma features as input. Predictions (over 41 classes) provided 
 by classifiers are considered as their output. 
 
@@ -19,7 +19,7 @@ classifiers.
 
 Datasets must be used from [Zenodo](https://zenodo.org/record/2552860#.XqxEMjMo-uV) and placed into
 folders as described in ```hparams.yaml```. Namely, folder ```Datasets``` must include directory ```FSDKaggle2018.audio_train``` with training audios, ```FSDKaggle2018.audio_test``` with test audios,
-```FSDKaggle2018.meta``` with csv meta-files ```train_post_competition.csv``` and ```test_post_competition_scoring_clips.csv```. We highly reccoment to keep this structure.
+```FSDKaggle2018.meta``` with csv meta-files ```train_post_competition.csv``` and ```test_post_competition_scoring_clips.csv```. We highly recommend keeping this structure.
 
 ### Installing
 
